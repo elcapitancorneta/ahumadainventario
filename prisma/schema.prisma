@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Dispositivo {
+  id               String                 @id @default(uuid())
+  tipo             String                 // COMPUTADOR, MONITOR, IMPRESORA, TELEFONO, OTRO
+  marca            String
+  modelo           String
+  numeroSerie      String                 @unique
+  codigoInventario String?
+  estado           String                 // OPERATIVO, BODEGA, REPARACION, DADO_DE_BAJA
+  detallesTecnicos String?                // JSON string for flexibility (e.g. CPU, RAM, Disk, IP, extension)
+  trabajador       Trabajador?            @relation(fields: [trabajadorId], references: [id], onDelete: SetNull)
+  trabajadorId     String?
+  ubicacion        String                 // "Bodega Central", "Sucursal Providencia", etc.
+  fechaIngreso     DateTime               @default(now())
+  comentarios      String?
+  reparaciones     HistorialReparacion[]
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+}
+
+model Componente {
+  id                 String   @id @default(uuid())
+  nombre             String
+  tipo               String   // Almacenamiento, RAM, Periférico, etc.
+  cantidadDisponible Int      @default(0)
+  ubicacion          String   // Bodega de destino
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Trabajador {
+  id           String        @id @default(uuid())
+  rut          String        @unique
+  nombre       String
+  cargo        String
+  departamento String
+  correo       String
+  dispositivos Dispositivo[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model HistorialReparacion {
+  id               String      @id @default(uuid())
+  dispositivo      Dispositivo @relation(fields: [dispositivoId], references: [id], onDelete: Cascade)
+  dispositivoId    String
+  fechaEnvio       DateTime    @default(now())
+  fechaRetorno     DateTime?
+  descripcionFalla String
+  solucion         String?
+  costo            Float?
+  tecnicoEncargado String
+  estado           String      // EN_PROCESO, RESUELTO, IRREPARABLE
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
