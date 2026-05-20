@@ -56,29 +56,27 @@
   --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@media (prefers-color-scheme: light) {
-  /* We can support a light theme optionally, but dark theme is our premium default */
-  :root {
-    --bg-base: 220 20% 97%;
-    --bg-surface: 220 20% 100%;
-    --bg-card: 220 20% 98%;
-    --bg-sidebar: 220 25% 94%;
-    
-    --border-color: 220 15% 87%;
-    --border-color-glow: 347 85% 45% / 0.15;
-    
-    --text-primary: 220 30% 15%;
-    --text-secondary: 220 15% 40%;
-    --text-muted: 220 10% 55%;
+html[data-theme='light'] {
+  --bg-base: 220 20% 97%;
+  --bg-surface: 220 20% 100%;
+  --bg-card: 220 20% 98%;
+  --bg-sidebar: 220 25% 94%;
+  
+  --border-color: 220 15% 87%;
+  --border-color-glow: 347 85% 45% / 0.15;
+  
+  --text-primary: 220 30% 15%;
+  --text-secondary: 220 15% 40%;
+  --text-muted: 220 10% 55%;
 
-    --glass-bg: 220 20% 100% / 0.75;
-    --glass-border: 220 15% 90% / 0.5;
+  --glass-bg: 220 20% 100% / 0.75;
+  --glass-border: 220 15% 90% / 0.5;
 
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.12);
-  }
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.12);
 }
+
 
 /* Reset and Globals */
 * {
@@ -1391,4 +1389,22 @@ textarea {
   color: white;
   transform: translateY(-1px);
 }
+
+.back-link {
+  color: hsl(var(--text-secondary));
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.back-link:hover {
+  color: var(--text-primary);
+}
+
+.theme-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  transform: scale(1.05);
+}
+
 

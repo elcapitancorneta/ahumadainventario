@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
 import AccessControl from "@/components/AccessControl";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
   title: "Inventario TI | Farmacias Ahumada",
@@ -19,12 +20,15 @@ export default function RootLayout({
         <div className="layout-container">
           {/* Sidebar Nav */}
           <aside className="sidebar">
-            <div className="sidebar-header">
-              <img src="/logo.svg" alt="Farmacias Ahumada Logo" className="logo-svg-img" style={{ height: "40px", width: "auto", display: "block" }} />
-              <div className="logo-text">
-                <span className="logo-brand">Ahumada</span>
-                <span className="logo-sub">Inventario TI</span>
+            <div className="sidebar-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", gap: "8px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <img src="/logo.svg" alt="Farmacias Ahumada Logo" className="logo-svg-img" style={{ height: "35px", width: "auto", display: "block" }} />
+                <div className="logo-text">
+                  <span className="logo-brand">Ahumada</span>
+                  <span className="logo-sub">Inventario TI</span>
+                </div>
               </div>
+              <ThemeToggle />
             </div>
             
             <nav className="sidebar-nav">
@@ -72,7 +76,17 @@ export default function RootLayout({
                 </svg>
                 <span>Reparaciones</span>
               </Link>
+
+              <Link href="/estadisticas" className="nav-item">
+                <svg className="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10" />
+                  <line x1="12" y1="20" x2="12" y2="4" />
+                  <line x1="6" y1="20" x2="6" y2="14" />
+                </svg>
+                <span>Estadísticas</span>
+              </Link>
             </nav>
+
 
             <AccessControl />
           </aside>
