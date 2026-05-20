@@ -19,16 +19,19 @@ export default async function DashboardPage() {
 
   // Totals calculations
   const totalDevices = devices.length;
-  const inService = devices.filter((d) => d.estado === "OPERATIVO").length;
-  const inStock = devices.filter((d) => d.estado === "BODEGA").length;
-  const inRepair = devices.filter((d) => d.estado === "REPARACION").length;
+  // If assigned to a worker and not bad, it's active
+  const inService = devices.filter((d) => d.trabajadorNombre && d.estado !== "MALO").length;
+  // If not assigned and not bad, it's in stock
+  const inStock = devices.filter((d) => !d.trabajadorNombre && d.estado !== "MALO").length;
+  // If bad, it's out of service / in repair
+  const inRepair = devices.filter((d) => d.estado === "MALO" || d.estado === "REPARACION").length;
 
   // Group by category
-  const pcCount = devices.filter((d) => d.tipo === "COMPUTADOR").length;
+  const pcCount = devices.filter((d) => d.tipo === "NOTEBOOK" || d.tipo === "DESKTOP" || d.tipo === "COMPUTADOR" || d.tipo === "ESCRITORIO").length;
+  const phoneCount = devices.filter((d) => d.tipo === "CELULAR" || d.tipo === "TELEFONO").length;
+  const accessoryCount = devices.filter((d) => d.tipo === "ACCESORIO").length;
   const monitorCount = devices.filter((d) => d.tipo === "MONITOR").length;
   const printerCount = devices.filter((d) => d.tipo === "IMPRESORA").length;
-  const phoneCount = devices.filter((d) => d.tipo === "TELEFONO").length;
-  const otherCount = devices.filter((d) => d.tipo === "OTRO").length;
 
   // Components alerts
   const lowStockComponents = components.filter((c) => c.cantidadDisponible < 5);
@@ -160,14 +163,14 @@ export default async function DashboardPage() {
                 </div>
               </div>
 
-              {otherCount > 0 && (
+              {accessoryCount > 0 && (
                 <div className="dist-item">
                   <div className="dist-meta">
-                    <span className="dist-name">Otros</span>
-                    <span className="dist-count">{otherCount}</span>
+                    <span className="dist-name">Accesorios</span>
+                    <span className="dist-count">{accessoryCount}</span>
                   </div>
                   <div className="progress-bar-bg">
-                    <div className="progress-bar-fill purple" style={{ width: `${totalDevices > 0 ? (otherCount / totalDevices) * 100 : 0}%` }}></div>
+                    <div className="progress-bar-fill purple" style={{ width: `${totalDevices > 0 ? (accessoryCount / totalDevices) * 100 : 0}%` }}></div>
                   </div>
                 </div>
               )}

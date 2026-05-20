@@ -11,16 +11,18 @@ datasource db {
 
 model Dispositivo {
   id               String                 @id @default(uuid())
-  tipo             String                 // COMPUTADOR, MONITOR, IMPRESORA, TELEFONO, OTRO
-  marca            String
-  modelo           String
-  numeroSerie      String                 @unique
+  tipo             String                 // NOTEBOOK, DESKTOP, CELULAR, ACCESORIO, etc.
+  marca            String?
+  modelo           String?
+  numeroSerie      String?
   codigoInventario String?
-  estado           String                 // OPERATIVO, BODEGA, REPARACION, DADO_DE_BAJA
+  estado           String?                // NUEVO, USADO, MALO, REPARACION, etc.
   detallesTecnicos String?                // JSON string for flexibility (e.g. CPU, RAM, Disk, IP, extension)
+  categoria        String?                // NOTEBOOKS_CAF, PC_RECETARIO, NOTEBOOKS_MALOS, MOCHILAS, CELULARES_MALOS, etc.
+  trabajadorNombre String?                // Flat worker name from Excel sheet
   trabajador       Trabajador?            @relation(fields: [trabajadorId], references: [id], onDelete: SetNull)
   trabajadorId     String?
-  ubicacion        String                 // "Bodega Central", "Sucursal Providencia", etc.
+  ubicacion        String?                // "CAF", "Recetario", "Bodega", etc.
   fechaIngreso     DateTime               @default(now())
   comentarios      String?
   reparaciones     HistorialReparacion[]
@@ -64,4 +66,25 @@ model HistorialReparacion {
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
 }
+
+model Cotizacion {
+  id            String   @id @default(uuid())
+  cantidad      Int
+  numeroParte   String?
+  descripcion   String
+  valorUnitario Float?
+  valorTotal    Float?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Usuario {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  rol       String   @default("LECTOR") // ADMIN or LECTOR
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Link from "next/link";
+import AccessControl from "@/components/AccessControl";
 
 export const metadata: Metadata = {
   title: "Inventario TI | Farmacias Ahumada",
@@ -19,7 +20,7 @@ export default function RootLayout({
           {/* Sidebar Nav */}
           <aside className="sidebar">
             <div className="sidebar-header">
-              <div className="logo-symbol">A</div>
+              <img src="/logo.svg" alt="Farmacias Ahumada Logo" className="logo-svg-img" style={{ height: "40px", width: "auto", display: "block" }} />
               <div className="logo-text">
                 <span className="logo-brand">Ahumada</span>
                 <span className="logo-sub">Inventario TI</span>
@@ -37,13 +38,13 @@ export default function RootLayout({
                 <span>Dashboard</span>
               </Link>
               
-              <Link href="/dispositivos" className="nav-item">
+              <Link href="/inventario" className="nav-item">
                 <svg className="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
                   <line x1="8" y1="21" x2="16" y2="21" />
                   <line x1="12" y1="17" x2="12" y2="21" />
                 </svg>
-                <span>Dispositivos</span>
+                <span>Inventario TI</span>
               </Link>
               
               <Link href="/componentes" className="nav-item">
@@ -73,15 +74,7 @@ export default function RootLayout({
               </Link>
             </nav>
 
-            <div className="sidebar-footer">
-              <div className="status-indicator">
-                <div className="status-dot"></div>
-                <div className="status-info">
-                  <span className="status-label">Modo Acceso</span>
-                  <span className="status-value">Lectura</span>
-                </div>
-              </div>
-            </div>
+            <AccessControl />
           </aside>
 
           {/* Main workspace */}
