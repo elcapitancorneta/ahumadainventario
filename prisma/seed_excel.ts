@@ -38,7 +38,7 @@ function parsePrice(val: any): number {
 
 async function main() {
   console.log('--- Iniciando Sembrado de Datos desde Excel ---');
-  const excelPath = path.join(__dirname, '..', 'scrap', 'Inventario 2025.xlsx');
+  const excelPath = path.join(__dirname, '..', 'scrap', 'Inventario2025.xlsx');
   
   const workbook = XLSX.readFile(excelPath);
   
