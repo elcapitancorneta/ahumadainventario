@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
-import EstadisticasClient from "./EstadisticasClient";
+import EstadisticasClient from "@/app/estadisticas/EstadisticasClient";
+
 
 export const revalidate = 0;
 
